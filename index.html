@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mail-to redirect</title>
+    <script>
+        // Parse query string
+        const params = new URLSearchParams(location.search);
+        const to      = params.get('to')      || 'default@example.com';
+        const subject = encodeURIComponent(params.get('subject') || '');
+        const body    = encodeURIComponent(params.get('body')    || '');
+
+        // Build the mailto URI
+        const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+
+        // Immediate redirect (fallback also provided)
+        document.write(`<meta http-equiv="refresh" content="0;url=${mailto}">`);
+        window.location.href = mailto;   // JavaScript fallback
+    </script>
+</head>
+<body>
+    If you are not redirected, <a id="link">click here to send mail</a>.
+    <script>
+        document.getElementById('link').href = mailto;
+    </script>
+</body>
+</html>
